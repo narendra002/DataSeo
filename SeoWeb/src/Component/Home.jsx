@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function Home() {
-  const URL="https://3001-narendra002-dataseo-xwr8sbc6siy.ws-us104.gitpod.io";
+  const URL="https://data-seo-vk8o.vercel.app/api/load";
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);

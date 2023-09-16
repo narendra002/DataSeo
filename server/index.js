@@ -40,7 +40,7 @@ app.post('/api/start', async (req, res) => {
         load_resources: true,
         enable_javascript: true,
         custom_js: customJsCode,
-        pingback_url: "https://3001-narendra002-dataseo-xwr8sbc6siy.ws-us104.gitpod.io",
+        pingback_url: "https://data-seo-vk8o.vercel.app",
         tag: 'some_string_123',
       },
     ];
