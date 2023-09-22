@@ -18,7 +18,7 @@ function Home() {
     const checkCrawlProgress = async () => {
       const resourcesResponse = await axios.post(`${URL}/api/load`, { taskId });
 
-      const crawlProgress = resourcesResponse.data.tasks[0].crawlProgress;
+      const crawlProgress = resourcesResponse.data.tasks[0].crawl_progress;
 
       if (crawlProgress !== 'finished') {
         // If crawlProgress is not finished, wait for a while and check again
