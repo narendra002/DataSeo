@@ -7,30 +7,38 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);
 
-   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const response = await axios.post(`${URL}/api/start`, { url });
-      const taskId = response.data.taskId[0].id;
+  try {
+    const response = await axios.post(`${URL}/api/start`, { url });
+    const taskId = response.data.taskId[0].id;
 
+    const checkCrawlProgress = async () => {
+      const resourcesResponse = await axios.post(`${URL}/api/load`, { taskId });
 
-      setTimeout( async () => {
-        const resourcesResponse = await axios.post(`${URL}/api/load`, { taskId });
+      const crawlProgress = resourcesResponse.data.tasks[0].result[0].crawl_progress;
 
-        // Add a setTimeout with a delay of 10000ms
-        console.log(resourcesResponse.data);
+      if (crawlProgress !== 'finished') { // Remove double quotes around 'finished'
+        // If crawlProgress is not finished, wait for a while and check again
+        setTimeout(checkCrawlProgress, 1000); // Adjust the delay as needed
+      } else {
+        // If crawlProgress is finished, set the resources state
         setResources(resourcesResponse.data.tasks[0].result[0].items);
-
         setLoading(false);
-      }, 10000);
-    } catch (error) {
-      console.error(error);
-      setResources([]);
-      setLoading(false);
-    }
-  };
+      }
+    };
+
+    // Start checking crawlProgress
+    checkCrawlProgress();
+  } catch (error) {
+    console.error(error);
+    setResources([]);
+    setLoading(false);
+  }
+};
+
 
 
   return (
